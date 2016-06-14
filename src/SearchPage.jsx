@@ -12,14 +12,20 @@ import {
 
 require("./index.scss");
 
-const host = "http://demo.searchkit.co/api/movies"
+const host = "http://search-dev-task-search-cluster-ric5clhuvao44dtnhhhlnje7o4.us-west-2.es.amazonaws.com"
+
+//const host = "http://demo.searchkit.co/api/movies"
 const searchkit = new SearchkitManager(host)
 
 const MovieHitsGridItem = (props)=> {
   const {bemBlocks, result} = props
-  let url = "http://www.imdb.com/title/" + result._source.imdbId
   const source:any = _.extend({}, result._source, result.highlight)
-  return (
+  let url = "https://s3-us-west-2.amazonaws.com/" 
+          + encodeURIComponent(source.Bucket) 
+          + "/" 
+          + encodeURIComponent(source.Key)
+  return (<div> <a href={url}> {source.Key}</a></div>);
+/*  return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <a href={url} target="_blank">
         <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
@@ -28,6 +34,7 @@ const MovieHitsGridItem = (props)=> {
       </a>
     </div>
   )
+  */
 }
 
 export class SearchPage extends React.Component {
@@ -39,10 +46,11 @@ export class SearchPage extends React.Component {
 		        <SearchBox
 		          autofocus={true}
 		          searchOnChange={true}
-							placeholder="Search movies..."
-		          prefixQueryFields={["actors^1","type^2","languages","title^10"]}/>
+							placeholder="Search documents..."
+		          prefixQueryFields={["Text"]}/>
 		      </TopBar>
 		      <LayoutBody>
+              {/*
 		        <SideBar>
 							<MenuFilter
 								id="type"
@@ -56,23 +64,28 @@ export class SearchPage extends React.Component {
 		            operator="AND"
 		            size={10}/>
 		        </SideBar>
+                */}
 		        <LayoutResults>
 		          <ActionBar>
 		            <ActionBarRow>
 		              <HitsStats/>
-									<SortingSelector options={[
+                      {/*					<SortingSelector options={[
 										{label:"Relevance", field:"_score", order:"desc", defaultOption:true},
 										{label:"Latest Releases", field:"released", order:"desc"},
 										{label:"Earliest Releases", field:"released", order:"asc"}
 									]}/>
+                                    */}
 		            </ActionBarRow>
+                    {/*
 		            <ActionBarRow>
 		              <SelectedFilters/>
 		              <ResetFilters/>
 		            </ActionBarRow>
+                    */}
 		          </ActionBar>
-		          <Hits mod="sk-hits-grid" hitsPerPage={10} itemComponent={MovieHitsGridItem}
-		            sourceFilter={["title", "poster", "imdbId"]}/>
+		          <Hits hitsPerPage={10} itemComponent={MovieHitsGridItem}
+                    highlightFields={["Text"]}
+		            sourceFilter={["Bucket","Key","Text"]}/>
 		          <NoHits/>
 							<Pagination showNumbers={true}/>
 		        </LayoutResults>
