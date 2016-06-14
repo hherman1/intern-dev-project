@@ -12,6 +12,7 @@ const Home = () => {
   )
 }
 
+/*
 ReactDOM.render((
 <Router history={browserHistory}>
   <Route path="/" component={App}>
@@ -20,3 +21,7 @@ ReactDOM.render((
   </Route>
 </Router>
 ), document.getElementById('root'));
+*/
+ReactDOM.render((
+                        <SearchPage/>
+                ),document.getElementById('root'));
