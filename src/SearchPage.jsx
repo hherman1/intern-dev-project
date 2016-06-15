@@ -262,7 +262,7 @@ export class SearchPage extends React.Component {
                     */}
 		          </ActionBar>
 		          <Hits hitsPerPage={10} itemComponent={FileListItem} highlightFields={["Text"]}
-		            sourceFilter={["Bucket","Key","Text"]}/>
+		            sourceFilter={["Bucket","Key"]}/>
 		          <NoHits/>
 							<Pagination showNumbers={true}/>
 		        </LayoutResults>
