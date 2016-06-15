@@ -23,6 +23,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.TransformerConfigurationException;
 import org.xml.sax.SAXException;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -93,7 +94,7 @@ public class TikaLambdaHandler implements RequestHandler<S3Event, String> {
 
     //Original Source:
     //http://stackoverflow.com/questions/1359689/how-to-send-http-request-in-java
-    private static String executePost(String targetURL, String documentData) {
+    private String executePost(String targetURL, String documentData) {
             HttpURLConnection connection = null;
             try {
                     URL url = new URL(targetURL);
@@ -119,6 +120,8 @@ public class TikaLambdaHandler implements RequestHandler<S3Event, String> {
                     return response.toString();
                   } catch (Exception e) {
                     e.printStackTrace();
+                    _logger.log("\nTarget URL: " + targetURL);
+                    _logger.log("\nParsed file contents: " + documentData);
                     return null;
                   } finally {
                     if(connection != null) {
@@ -162,6 +165,8 @@ public class TikaLambdaHandler implements RequestHandler<S3Event, String> {
 
       JSONObject extractJson = new JSONObject();
 
+      String cleanText = StringEscapeUtils.escapeHtml(extractedText);
+
       String contentType = tikaMetadata.get("Content-Type");
       contentType = contentType != null ? contentType : "content/unknown";
 
@@ -171,7 +176,7 @@ public class TikaLambdaHandler implements RequestHandler<S3Event, String> {
       extractJson.put("Exception", null);
       extractJson.put("Bucket", bucket);
       extractJson.put("Key",key);
-      extractJson.put("Text", extractedText);
+      extractJson.put("Text", cleanText);
 
       return extractJson.toJSONString();
     }
