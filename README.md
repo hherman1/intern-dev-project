@@ -1,7 +1,5 @@
-# Searchkit ES6 Boilerplate
-Small project to get started using searchkit. Webpack, es6 (es2015 babel)
+# Internship Dev Project
+Development project requested for internship application. Configuring the package is largely a matter of working with AWS. However, to compile the front end you must:
 
-## Steps
-* npm install
-* npm start
-* visit http://localhost:3000
+* `npm install`
+* `webpack --config .\webpack.dev.config.js`
