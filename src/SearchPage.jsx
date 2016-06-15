@@ -79,6 +79,7 @@ class DeleteButton extends React.Component {
                 console.log("Deleted " + this.props.Key);
                 var deletePromise = deleteObjectS3AndES(bucket,this.props.Key);
                 this.refs.deleteWindow.await(deletePromise);
+                this.refs.messageDeleting.display(deletePromise);
                 var self = this;
                 deletePromise.then(function() {
                         self.refs.deleteWindow.close();
@@ -90,6 +91,7 @@ class DeleteButton extends React.Component {
                 return (
                                 <div className="delete-button-structure">
                                         <Message className="delete" duration={3000} ref="messageDeleted"> Deleted! </Message>
+                                        <PromiseMessage className="delete" ref="messageDeleting"> Deleting... </PromiseMessage>
                                         <div onClick={()=>this.refs.deleteWindow.open()} className="delete-button">
                                                 <div >Delete</div>
                                         </div>
