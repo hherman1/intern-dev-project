@@ -39,6 +39,8 @@
                 border-left: 1px solid #eee;
         }
         .delete-button {
+                overflow:auto;
+                height:100%;
                 color:#aaa;
         }
         .delete-button:hover {
@@ -47,7 +49,10 @@
                 cursor:pointer;
         }
         .delete-button>div {
-            padding: 15px;
+                position:relative;
+                top:50%;
+                transform:translateY(-50%);
+                padding: 15px;
         }
       .delete-button-confirm {
               background-color:tomato;
