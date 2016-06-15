@@ -3,13 +3,88 @@
 <head>
 	<title>Sample App</title>
   <link href="https://cdn.jsdelivr.net/searchkit/0.9.0/theme.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+        button,input[type=file],input[type=submit] {
+                font-size:14px;
+                padding:10px;
+                margin:5px;
+        }
+    .downloadable:hover {
+            cursor:pointer;
+            background-color:#eee;
+      }
+      .delete-button {
+              float:right;
+              margin-right:30px;
+      }
+      .delete-button-confirm {
+              background-color:tomato;
+      }
+      .highlighted {
+            color: #1e7b7b;
+            text-decoration: underline;
+      }
+      .window {
+              background-color:#fff;
+              position:fixed;
+              left:50%;
+              top:50%;
+              transform:translate(-50%,-50%);
+              padding:15px;
+              border: 1px solid #ddd;
+      }
+      .window.frozen {
+              background-color:#ddd;
+      }
+      .title {
+              display:inline-block;
+      }
+      .row {
+              float:left;
+              width:100%;
+              margin-bottom:15px;
+      }
+      .closeButton {
+              float:right;
+              margin-left:10px;
+      }
+      .clickable {
+              cursor:pointer;
+              color:#aaa;
+      }
+      .clickable:hover {
+              color:#000;
+      }
+      .message {
+              display:none;
+      }
+      .message.visible.delete {
+              background-color:tomato;
+              color:#eee;
+      }
+      .message.visible {
+              position:fixed;
+              left:50%;
+              top:200px;
+              transform:translateX(-50%);
+              display:initial;
+              border-radius:5px;
+              padding:15px;
+              background-color:lightGreen;
+              border:1px black solid;
+      }
+      #controls>* {
+              float:right;
+              margin-left:5px;
+      }
+  </style>
 </head>
 
 <body>
 	<div id='root'>
 	</div>
 	<script src="./dist/bundle.js"></script>
-
 </body>
 
 </html>

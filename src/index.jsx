@@ -22,6 +22,8 @@ ReactDOM.render((
 </Router>
 ), document.getElementById('root'));
 */
-ReactDOM.render((
-                        <SearchPage/>
-                ),document.getElementById('root'));
+//$script(["https://sdk.amazonaws.com/js/aws-sdk-2.3.19.min.js"],function(){
+        ReactDOM.render((
+                                <SearchPage/>
+                        ),document.getElementById('root'));
+//});

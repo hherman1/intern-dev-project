@@ -14,6 +14,10 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static'
   },
+/*  externals: {
+          'aws-sdk':'aws-sdk'
+  },
+  */
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
