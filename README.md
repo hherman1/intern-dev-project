@@ -6,7 +6,7 @@ Development project requested for internship application. Configuring the packag
 
 ## AWS Lambda Source
 
-The AWS Lambda source is available in the folder /lambda-java-src
+The AWS Lambda source is available in the folder /lambda-java-src. It is compiled with `mvn package`
 
 This project is forked from https://github.com/searchkit/searchkit-boilerplate 
 
