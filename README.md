@@ -3,3 +3,7 @@ Development project requested for internship application. Configuring the packag
 
 1. `npm install`
 2. `webpack --config .\webpack.dev.config.js`
+
+## AWS Lambda Source
+
+The AWS Lambda source is available in the folder /lambda-java-src
