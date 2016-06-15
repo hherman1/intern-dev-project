@@ -12,38 +12,42 @@ import {
 } from "searchkit";
 
 require("./index.scss");
+var $ = require("jquery");
 
 const host = "http://search-dev-task-search-cluster-ric5clhuvao44dtnhhhlnje7o4.us-west-2.es.amazonaws.com"
 const searchkit = new SearchkitManager(host)
 
 var bucket = getS3Bucket();
 
-const FileListItem = (props)=> {
-  const {bemBlocks, result} = props
-  const source:any = _.extend({}, result._source, result.highlight)
-  let url = "https://s3-us-west-2.amazonaws.com/" 
-          + encodeURIComponent(source.Bucket) 
-          + "/" 
-          + encodeURIComponent(source.Key)
-  if(result.highlight) {
-          var highlights = source.Text
-                  .map((highlight) => "<li>" + highlight + "</li>")
-                  .join("")
-                  .replace(/\n/,"")
-                  .replace(/\<em\>/g,"<span class='highlighted'>")
-                  .replace(/\<\/em\>/g,"</span>");
-  } else {
-          var highlights = ""
-  }
-  return (
-                  <div>
-                          <DeleteButton Key={source.Key}/>
-                          <div className="downloadable" onClick={()=>downloadObject(bucket,source.Key)}>
-                                  <h4>{source.Key}</h4> 
-                                  <ul dangerouslySetInnerHTML={{__html:highlights}}></ul>
+class FileListItem extends React.Component {
+      render() {
+          var t = $;
+          const {bemBlocks, result} = this.props
+          const source:any = _.extend({}, result._source, result.highlight)
+          let url = "https://s3-us-west-2.amazonaws.com/" 
+                  + encodeURIComponent(source.Bucket) 
+                  + "/" 
+                  + encodeURIComponent(source.Key)
+          if(result.highlight) {
+                  var highlights = source.Text
+                          .map((highlight) => "<li>" + highlight + "</li>")
+                          .join("")
+                          .replace(/\n/,"")
+                          .replace(/\<em\>/g,"<span class='highlighted'>")
+                          .replace(/\<\/em\>/g,"</span>");
+          } else {
+                  var highlights = ""
+          }
+          return (
+                          <div className="file-listing">
+                                  <div className="downloadable" onClick={()=>downloadObject(bucket,source.Key)}>
+                                          <b>{source.Key}</b> 
+                                          <ul dangerouslySetInnerHTML={{__html:highlights}}></ul>
+                                  </div>
+                                  <DeleteButton Key={source.Key}/>
                           </div>
-                  </div>
-          );
+                  );
+       }
 }
 class S3Controls extends React.Component {
         render() {
@@ -84,9 +88,11 @@ class DeleteButton extends React.Component {
         }
         render() {
                 return (
-                                <div className="delete-button">
+                                <div className="delete-button-structure">
                                         <Message className="delete" duration={3000} ref="messageDeleted"> Deleted! </Message>
-                                        <div className="clickable" onClick={()=>this.refs.deleteWindow.open()}>Delete</div>
+                                        <div onClick={()=>this.refs.deleteWindow.open()} className="delete-button">
+                                                <div >Delete</div>
+                                        </div>
                                         <Window title={"Delete " + this.props.Key} ref="deleteWindow">
                                                 <button onClick={()=>this.refs.deleteWindow.close()}>Cancel</button>
                                                 <button className="delete-button-confirm" onClick={()=>this.executeDelete()}> Delete </button>
@@ -213,6 +219,16 @@ class PromiseMessage extends Message {
 }
                 
 
+function customQueryBuilder(query,options) {
+        return {
+                "match_phrase_prefix":{
+                        "Text":{
+                                "query":query,
+                                "max_expansions":5
+                        }
+                }
+        }
+}
 export class SearchPage extends React.Component {
 	render(){
 		return (
@@ -221,7 +237,7 @@ export class SearchPage extends React.Component {
 		      <TopBar>
 		        <SearchBox
 		          autofocus={true}
-		          searchOnChange={true}
+                  searchOnChange={true}
 							placeholder="Search documents..."
 		          prefixQueryFields={["Text"]}/>
 		      </TopBar>
@@ -260,7 +276,7 @@ export class SearchPage extends React.Component {
 		            </ActionBarRow>
                     */}
 		          </ActionBar>
-		          <Hits hitsPerPage={10} itemComponent={FileListItem} highlightFields={["Text"]}
+		          <Hits className="files-list" hitsPerPage={10} itemComponent={FileListItem} highlightFields={["Text"]}
 		            sourceFilter={["Bucket","Key"]}/>
 		          <NoHits/>
 							<Pagination showNumbers={true}/>

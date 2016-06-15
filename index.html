@@ -10,14 +10,45 @@
                 padding:10px;
                 margin:5px;
         }
-    .downloadable:hover {
+        ul {
+                margin:0;
+        }
+        .files-list {
+                border-collapse:collapse;
+        }
+        .file-listing {
+                display:table-row;
+                position:relative;
+                border-top:1px solid #eee;
+        }
+        .file-listing:last-child {
+                border-bottom:1px solid #eee;
+        }
+        .downloadable:hover {
             cursor:pointer;
             background-color:#eee;
       }
-      .delete-button {
-              float:right;
-              margin-right:30px;
-      }
+        .downloadable {
+                display:table-cell;
+                padding:15px;
+                width:100%;
+        }
+        .file-listing>.delete-button-structure {
+                display:table-cell;
+                vertical-align:middle;
+                border-left: 1px solid #eee;
+        }
+        .delete-button {
+                color:#aaa;
+        }
+        .delete-button:hover {
+                background-color:tomato;
+                color:#eee;
+                cursor:pointer;
+        }
+        .delete-button>div {
+            padding: 15px;
+        }
       .delete-button-confirm {
               background-color:tomato;
       }
@@ -26,6 +57,7 @@
             text-decoration: underline;
       }
       .window {
+              z-index:100;
               background-color:#fff;
               position:fixed;
               left:50%;
