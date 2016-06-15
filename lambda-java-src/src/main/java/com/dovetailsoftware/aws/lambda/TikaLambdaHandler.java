@@ -165,7 +165,7 @@ public class TikaLambdaHandler implements RequestHandler<S3Event, String> {
 
       JSONObject extractJson = new JSONObject();
 
-      String cleanText = StringEscapeUtils.escapeHtml(extractedText);
+      String cleanText = StringEscapeUtils.escapeHtml(extractedText).replaceAll("\\s+"," ");
 
       String contentType = tikaMetadata.get("Content-Type");
       contentType = contentType != null ? contentType : "content/unknown";
