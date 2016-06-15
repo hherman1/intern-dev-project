@@ -21,7 +21,6 @@ var bucket = getS3Bucket();
 const FileListItem = (props)=> {
   const {bemBlocks, result} = props
   const source:any = _.extend({}, result._source, result.highlight)
-  var bucket = getS3Bucket();
   let url = "https://s3-us-west-2.amazonaws.com/" 
           + encodeURIComponent(source.Bucket) 
           + "/" 
